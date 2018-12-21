@@ -131,19 +131,23 @@ ganache-cli --port 9545
 Создаём файл `test/Auction.js`
 
 ```
+// Импортируем интерфейс смарт контракта, который генерирует truffle
 const Auction = artifacts.require('Auction');
 
+// Пишем на него тест
 contract('AuctionTests', async(accounts) => {
   let auction;
 
+  // Перед каждым тестом создаёи новый контракт
   beforeEach(async function () {
     auction = await Auction.new();
   });
 
+  // И собственно сами тесты
   it('should allow to start auction', async() => {
     await auction.auction('1')
   });
-
+  
   it('should allow to make multiple bids', async() => {
     await auction.auction('1')
     await auction.bid({from: accounts[1], value: '2'});
